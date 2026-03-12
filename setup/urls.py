@@ -16,7 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+from desafioBackend.views import AlunoViewSet, CursoViewSet, MatriculaViewSet
+
+router = routers.DefaultRouter()
+router.register('alunos', AlunoViewSet, basename='alunos')
+router.register('cursos', CursoViewSet, basename='alunos')
+router.register('matriculas', MatriculaViewSet, basename='matriculas')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(',include(router.urls)')
 ]
