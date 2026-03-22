@@ -149,3 +149,39 @@ def delete_curso(request, id):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+#Views para Matriculas
+        
+@api_view(['POST'])
+def matricular_aluno(request):
+    nova_matricula = request.data
+    serializer = MatriculaSerializer(data=nova_matricula)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def matriculas_curso(request, id_Curso):
+    if request.method == 'GET':
+        matriculas = Matricula.objects.filter(id_curso = id_Curso)
+    
+        serializer = MatriculaSerializer(matriculas, many=True)
+        return Response(serializer.data)
+    
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def matriculas_aluno(request, id_Aluno):
+    if request.method == 'GET':
+        matriculas = Matricula.objects.filter(id_aluno = id_Aluno)
+    
+        serializer = MatriculaSerializer(matriculas, many=True)
+        return Response(serializer.data)
+    
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
