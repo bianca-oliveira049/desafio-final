@@ -156,6 +156,21 @@ def matricular_aluno(request):
     nova_matricula = request.data
     serializer = MatriculaSerializer(data=nova_matricula)
 
+    id_aluno = request.data.get('id_aluno')
+    id_curso = request.data.get('id_curso')
+
+    if Matricula.objects.filter(id_aluno, id_curso).exists():
+        return Response({"Error": "O aluno já está matriculado no curso!"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not Aluno.objects.filter(id_aluno).exists(): 
+        return Response({"Error": "Aluno não encontrado!"}, status=status.HTTP_404_NOT_FOUND)
+    
+    if not Curso.objects.filter(id_curso).exists():
+        return Response({"Error": "Curso não encontrado!"}, status=status.HTTP_404_NOT_FOUND)
+    
+    if Matricula.objects.filter(id_aluno).count() == 5:
+        return Response({"Error": "Aluno já possui !"}, status=status.HTTP_404_NOT_FOUND)
+    
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
