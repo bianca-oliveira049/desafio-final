@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'desafioBackend',
     'rest_framework',
+    'drf_yasg',
     'corsheaders',
+    
 ]
 
 MIDDLEWARE = [
