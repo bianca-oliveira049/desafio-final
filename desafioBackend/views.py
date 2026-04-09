@@ -25,7 +25,7 @@ def get_aluno_id(request, id):
     try:
         aluno = Aluno.objects.get(pk=id)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'Error': 'Aluno não encontrado!'}, status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET': 
         serializer = AlunoSerializer(aluno)
@@ -38,7 +38,7 @@ def get_aluno_id(request, id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
-        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'Error': 'Não foi possível realizar a modificação!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['POST'])
 def create_aluno(request):
@@ -49,14 +49,14 @@ def create_aluno(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível cadastrar o aluno!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
 def update_aluno(request, id):
     try:
         aluno_atualizado = Aluno.objects.get(pk=id)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'Error': 'Aluno não encontrado!'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = AlunoSerializer(aluno_atualizado, data=request.data, partial=True)
 
@@ -64,7 +64,7 @@ def update_aluno(request, id):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível salvar a modificação!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 def delete_aluno(request, id):
@@ -76,7 +76,7 @@ def delete_aluno(request, id):
             return Response(status=status.HTTP_202_ACCEPTED)
 
         except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({'Error': 'Não foi possível excluir o cadastro do aluno!'}, status=status.HTTP_400_BAD_REQUEST)
         
 #-----------------------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ def create_curso(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível cadastrar o curso!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_cursos(request):
@@ -100,14 +100,14 @@ def get_cursos(request):
         serializer = CursoSerializer(cursos, many=True)
         return Response(serializer.data)
     
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível atender à requisição!'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PATCH'])
 def get_curso_id(request, id):
     try:
         curso = Curso.objects.get(pk=id)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'Error': 'Curso não encontrado!'}, status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET': 
         serializer = CursoSerializer(curso)
@@ -120,7 +120,7 @@ def get_curso_id(request, id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
-        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'Error': 'Não foi possível salvar a modificação!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
 def update_curso(request, id):
@@ -135,7 +135,7 @@ def update_curso(request, id):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível salvar a modificação!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 def delete_curso(request, id):
@@ -147,10 +147,11 @@ def delete_curso(request, id):
             return Response(status=status.HTTP_202_ACCEPTED)
 
         except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({'Error': 'Não doi possível excluir o curso1'}, status=status.HTTP_400_BAD_REQUEST)
+
+#----------------------------------------------------------------------------------------------------
 
 #Views para Matriculas
-        
 @api_view(['POST'])
 def matricular_aluno(request):
     nova_matricula = request.data
@@ -158,24 +159,24 @@ def matricular_aluno(request):
 
     id_aluno = request.data.get('id_aluno')
     id_curso = request.data.get('id_curso')
-
-    if Matricula.objects.filter(id_aluno, id_curso).exists():
+    
+    if Matricula.objects.filter(id_aluno = id_aluno, id_curso = id_curso).exists():
         return Response({"Error": "O aluno já está matriculado no curso!"}, status=status.HTTP_400_BAD_REQUEST)
     
-    if not Aluno.objects.filter(id_aluno).exists(): 
+    if not Aluno.objects.filter(id = id_aluno).exists(): 
         return Response({"Error": "Aluno não encontrado!"}, status=status.HTTP_404_NOT_FOUND)
     
-    if not Curso.objects.filter(id_curso).exists():
+    if not Curso.objects.filter(id = id_curso).exists():
         return Response({"Error": "Curso não encontrado!"}, status=status.HTTP_404_NOT_FOUND)
     
-    if Matricula.objects.filter(id_aluno).count() == 5:
-        return Response({"Error": "Aluno já possui !"}, status=status.HTTP_404_NOT_FOUND)
+    if Matricula.objects.filter(id_aluno = id_aluno, status = "ativa").count() == 5:
+        return Response({"Error": "Aluno já possui número máximo de matrículas!"}, status=status.HTTP_404_NOT_FOUND)
     
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível realizar a matrícula!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def matriculas_curso(request, id_Curso):
@@ -185,7 +186,7 @@ def matriculas_curso(request, id_Curso):
         serializer = MatriculaSerializer(matriculas, many=True)
         return Response(serializer.data)
     
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível salvar a modificação!'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def matriculas_aluno(request, id_Aluno):
@@ -195,8 +196,35 @@ def matriculas_aluno(request, id_Aluno):
         serializer = MatriculaSerializer(matriculas, many=True)
         return Response(serializer.data)
     
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível salvar a modificação!'}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['PATCH'])
+def cancelar_matricula(request, id):
+    try:
+        matricula = Matricula.objects.get(id=id)
 
+        matricula.status = 'cancelada'
+        matricula.save()
 
+        serializer = MatriculaSerializer(matricula)
 
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+    
+    except:
+        return Response({'Error': 'Não foi possível cancelar a matrícula!'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET','PATCH'])
+def concluir_curso(request, id):
+    try:
+        matricula = Matricula.objects.get(pk=id)
+
+        matricula.status = 'concluida'
+        matricula.save()
+
+        serializer = MatriculaSerializer(matricula)
+
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+    except:
+        return Response({'Error': 'Não foi possível concluir a matrícula!'}, status=status.HTTP_404_NOT_FOUND)
+    

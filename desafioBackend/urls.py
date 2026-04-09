@@ -19,5 +19,7 @@ urlpatterns = [
 
     path('matricular/', views.matricular_aluno),
     path('matriculas/curso/<int:id_Curso>/', views.matriculas_curso),
-    path('matriculas/aluno/<int:id_Aluno>/', views.matriculas_aluno)
+    path('matriculas/aluno/<int:id_Aluno>/', views.matriculas_aluno),
+    path('matriculas/cancelar_matricula/<int:id>/', views.cancelar_matricula),
+    path('matriculas/concluir_curso/<int:id>/', views.concluir_curso)
 ]
