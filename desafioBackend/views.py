@@ -49,7 +49,7 @@ def create_aluno(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    return Response({'Error': 'Não foi possível cadastrar o aluno!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível cadastrar o aluno!', 'dados': serializer.data}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
 def update_aluno(request, id):
@@ -90,7 +90,7 @@ def create_curso(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    return Response({'Error': 'Não foi possível cadastrar o curso!'}, serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'Error': 'Não foi possível cadastrar o curso!'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_cursos(request):
