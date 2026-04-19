@@ -25,11 +25,11 @@
 git clone [https://github.com/bianca-oliveira049/desafio-final.git](https://github.com/bianca-oliveira049/desafio-final.git)
 cd desafio-final
 
-**2. Configurar ambiente virtual
+## 2. Configurar ambiente virtual
 python -m venv venv
-# No Windows:
+*No Windows:*
 .\venv\Scripts\activate
-# No Linux/Mac:
+*No Linux/Mac:*
 source venv/bin/activate
 
 ### 3. Instalar dependências
