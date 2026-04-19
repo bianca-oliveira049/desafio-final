@@ -24,21 +24,24 @@
 ```bash
 git clone [https://github.com/bianca-oliveira049/desafio-final.git](https://github.com/bianca-oliveira049/desafio-final.git)
 cd desafio-final
-
+```
 ## 2. Configurar ambiente virtual
+```
 python -m venv venv
 *No Windows:*
 .\venv\Scripts\activate
 *No Linux/Mac:*
 source venv/bin/activate
-
+```
 ### 3. Instalar dependências
+```
 pip install -r requirements.txt
-
+```
 ### 4. Executar migrações e iniciar
+```
 python manage.py migrate
 python manage.py runserver
-
+```
 ## Endpoints disponíveis
 *'api/alunos/' - Listar alunos
 *'api/aluno/<int:id>/' - Procurar aluno por id
