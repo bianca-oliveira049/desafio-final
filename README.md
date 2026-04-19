@@ -43,22 +43,22 @@ python manage.py migrate
 python manage.py runserver
 ```
 ## Endpoints disponíveis
-*'api/alunos/' - Listar alunos
-*'api/aluno/<int:id>/' - Procurar aluno por id
-*'api/aluno/criar/' - Criar aluno
-*'api/aluno/atualizar/<int:id>/' -  Atualizar dados de aluno
-*'api/aluno/deletar/<int:id>/' - Deletar aluno
+* 'api/alunos/' - Listar alunos
+* 'api/aluno/<int:id>/' - Procurar aluno por id
+* 'api/aluno/criar/' - Criar aluno
+* 'api/aluno/atualizar/<int:id>/' -  Atualizar dados de aluno
+* 'api/aluno/deletar/<int:id>/' - Deletar aluno
 
-*'api/cursos/' - Listar cursos
-*'api/curso/<int:id>/' - Procurar curso por id
-*'api/curso/criar/' - Criar curso
-*'api/curso/atualizar/<int:id>/' - Atualizar dados de curso
-*'api/curso/deletar/<int:id>/' - Deletar curso
+* 'api/cursos/' - Listar cursos
+* 'api/curso/<int:id>/' - Procurar curso por id
+* 'api/curso/criar/' - Criar curso
+* 'api/curso/atualizar/<int:id>/' - Atualizar dados de curso
+* 'api/curso/deletar/<int:id>/' - Deletar curso
 
-*'api/matricular/' - Criar matrícula
-*'api/matriculas/curso/<int:id_Curso>/' - Listar matrículas de um curso
-*'api/matriculas/aluno/<int:id_Aluno>/' - Listar matrículas de um aluno
-*'api/matriculas/cancelar_matricula/<int:id>/' - Cancelar matrícula
-*'api/matriculas/concluir_curso/<int:id>/' - Concluir matrícula
+* 'api/matricular/' - Criar matrícula
+* 'api/matriculas/curso/<int:id_Curso>/' - Listar matrículas de um curso
+* 'api/matriculas/aluno/<int:id_Aluno>/' - Listar matrículas de um aluno
+* 'api/matriculas/cancelar_matricula/<int:id>/' - Cancelar matrícula
+* 'api/matriculas/concluir_curso/<int:id>/' - Concluir matrícula
 
-*'swagger/' - Acessar documentação
+* 'swagger/' - Acessar documentação
